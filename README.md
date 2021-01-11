@@ -68,3 +68,21 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `yarn build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+## Openshift
+
+```
+export BUILDER_IMAGE="quay.io/evanshortiss/s2i-nodejs-nginx"
+export APPLICATION_NAME="sample-react-app"
+# REPLACE THIS WITH YOUR REPOSITORY URL
+export GIT_REPO="https://github.com/welshstew/sample-react-app"
+
+oc new-project react-webapp
+
+oc new-app $BUILDER_IMAGE~$GIT_REPO \
+--name $APPLICATION_NAME \
+--build-env BUILD_OUTPUT_DIR=build
+
+oc expose svc/$APPLICATION_NAME
+```
